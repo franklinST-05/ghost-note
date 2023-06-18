@@ -3,13 +3,26 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { ChangeEvent, useState } from 'react';
 import { FiLink } from 'react-icons/fi';
+import { ToastContainer, toast } from 'react-toastify';
 
 const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
 
   const [body, setBody] = useState<string>(note.body ?? '');
-  
+
   const onChangeBody = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setBody(e.target.value)
+  }
+
+  const shareLink = async () => {
+    try {
+      await navigator.share({
+        title: note.identifier,
+        url: window.location.href,
+      });
+    } catch (error) {
+      navigator.clipboard.writeText(window.location.href);
+      toast('Copied to clipboard');
+    }
   }
 
   return (
@@ -21,10 +34,15 @@ const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
       </Head>
 
       <header className="w-full py-8">
-        <button className="group flex items-center gap-2">
-          <p className="text-base font-medium">{note.identifier}</p>
-          <FiLink className="text-gray-500 group-hover:text-white" />
-        </button>
+        <div>
+          <button
+            onClick={shareLink}
+            className="group flex items-center gap-2"
+          >
+            <p className="text-base font-medium">{note.identifier}</p>
+            <FiLink className="text-gray-500 group-hover:text-white" />
+          </button>
+        </div>
       </header>
 
       <section>
@@ -34,6 +52,8 @@ const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
           className="w-full min-h-full bg-transparent outline-none"
         />
       </section>
+
+      <ToastContainer theme="dark"/>
     </main>
   );
 }
