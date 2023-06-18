@@ -6,7 +6,7 @@ function routerHandler(router: NodeRouter<NextApiRequest, NextApiResponse<HttpRe
   return router.handler({
     onError: (err, req, res) => {
       return res.status(500).json({
-        error: 'Erro interno do servidor'
+        error: 'Internal server error'
       });
     }
   });
