@@ -24,7 +24,7 @@ router.post(async (req, res) => {
         trim: true,
     });
 
-    if(identifier != suggestIdentifier) {
+    if (identifier != suggestIdentifier) {
         return res.status(400).json({
             error: 'Invalid identifier',
             data: {
@@ -37,8 +37,32 @@ router.post(async (req, res) => {
         data: { identifier, body }
     });
 
-    return res.status(400).json({
+    return res.status(201).json({
         data: { note }
+    });
+});
+
+router.put(async (req, res) => {
+
+    const { identifier, body } = req.body;
+
+    const existsNote = await client.note.findUnique({
+        where: { identifier }
+    });
+
+    if (!existsNote) {
+        return res.status(404).json({
+            error: 'Not found'
+        });
+    }
+
+    const updatedNote = await client.note.update({
+        where: { identifier },
+        data: { body }
+    });
+
+    return res.status(200).json({
+        data: { note: updatedNote }
     });
 });
 
