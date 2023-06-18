@@ -1,4 +1,5 @@
 import { HttpResponse } from '@/protocols/http';
+import routerHandler from '@/utils/router-handler';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createRouter } from 'next-connect';
 
@@ -10,8 +11,4 @@ router.get((req, res) => {
     });
 });
 
-export default router.handler({
-    onError(err, req, res) {
-        
-    },
-});
+export default routerHandler(router);
