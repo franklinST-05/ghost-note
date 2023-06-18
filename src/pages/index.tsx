@@ -17,7 +17,7 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <main className="w-full min-h-screen bg-black text-white flex items-center justify-center">
+    <main className="container-app min-h-screen flex items-center justify-center">
       <section className="space-y-14">
         <h1 className="text-4xl font-semibold">Fetch my ghost block</h1>
         <div className="border-b-2 border-gray-900 flex items-center justify-center px-3 gap-3">
