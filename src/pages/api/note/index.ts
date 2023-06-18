@@ -33,6 +33,16 @@ router.post(async (req, res) => {
         });
     }
 
+    const existsNote = await client.note.findUnique({
+        where: { identifier }
+    });
+
+    if(existsNote) {
+        return res.status(409).json({
+            error: 'Already exists'
+        });
+    }
+
     const note = await client.note.create({
         data: { identifier, body }
     });
