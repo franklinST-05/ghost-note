@@ -1,4 +1,5 @@
 import { Note } from '@prisma/client';
+import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { ChangeEvent, useState } from 'react';
@@ -65,8 +66,8 @@ interface EditorPageProps {
 export const getServerSideProps: GetServerSideProps<EditorPageProps> = async (context) => {
   try {
     const { identifier } = context.query;
-    const response = await fetch('http://localhost:3000/api/note/' + identifier);
-    const result = await response.json();
+    const response = await axios.get('http://localhost:3000/api/note/' + identifier);
+    const result = await response.data;
 
     if (result.error) return {
       notFound: true
