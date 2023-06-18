@@ -3,15 +3,17 @@ import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { ChangeEvent, useState } from 'react';
-import { FiLink } from 'react-icons/fi';
+import { FiLink, FiSave } from 'react-icons/fi';
 import { ToastContainer, toast } from 'react-toastify';
 
 const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
 
+  const [changedBody, setChangedBody] = useState<boolean>(false);
   const [body, setBody] = useState<string>(note.body ?? '');
 
   const onChangeBody = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setBody(e.target.value)
+    setChangedBody(true);
   }
 
   const shareLink = async () => {
@@ -26,6 +28,16 @@ const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
     }
   }
 
+  const saveBody = async () => {
+    try {
+      await axios.put('/api/note', { identifier: note.identifier, body });
+      setChangedBody(false);
+      toast('Saved!');
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <main className="container-app">
       <Head>
@@ -34,7 +46,7 @@ const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
         <meta name="keywords" content={note.identifier} />
       </Head>
 
-      <header className="w-full py-8">
+      <header className="w-full py-8 flex items-center justify-between">
         <div>
           <button
             onClick={shareLink}
@@ -44,6 +56,11 @@ const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
             <FiLink className="text-gray-500 group-hover:text-white" />
           </button>
         </div>
+        <nav>
+          <button onClick={saveBody} className={`w-10 h-10 bg-zinc-900 rounded-lg flex items-center justify-center ${changedBody ? 'border-2 border-offset-4 bg-green-600 text-green-950 border-green-400':''}`}>
+            <FiSave />
+          </button>
+        </nav>
       </header>
 
       <section>
@@ -54,7 +71,7 @@ const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
         />
       </section>
 
-      <ToastContainer theme="dark"/>
+      <ToastContainer theme="dark" />
     </main>
   );
 }
