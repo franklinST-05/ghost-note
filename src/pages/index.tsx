@@ -19,8 +19,8 @@ const HomePage: React.FC = () => {
     setIdentifier(value);
   }
 
-  const onKeyEnterIdentifier: KeyboardEventHandler<HTMLInputElement> = async (e) => {
-    if (e.key === 'Enter') {
+  const onKeyEnterIdentifier: KeyboardEventHandler<HTMLInputElement> = async ({ key, keyCode }) => {
+    if (key === 'Enter' || keyCode === 13) {
       try {
         await axios.post('/api/note', { identifier });
         router.push(identifier);
