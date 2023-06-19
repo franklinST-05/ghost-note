@@ -55,7 +55,7 @@ const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
         </button>
 
         <nav>
-          <Button onClick={saveBody} className={changedBody ? 'shadow-md shadow-green-500/40 bg-green-500 text-green-950 ' : ''}>
+          <Button onClick={saveBody} className={changedBody ? '!shadow-md !shadow-green-500/40 !bg-green-500 !text-green-950 ' : ''}>
             <FiSave />
           </Button>
         </nav>
