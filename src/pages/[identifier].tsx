@@ -1,3 +1,4 @@
+import Button from '@/components/Button';
 import { Note } from '@prisma/client';
 import axios from 'axios';
 import { GetServerSideProps } from 'next';
@@ -57,9 +58,9 @@ const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
           </button>
         </div>
         <nav>
-          <button onClick={saveBody} className={`w-10 h-10 bg-zinc-900 rounded-lg flex items-center justify-center ${changedBody ? 'border-2 border-offset-4 bg-green-600 text-green-950 border-green-400':''}`}>
+          <Button onClick={saveBody} className={changedBody ? 'border-2 border-offset-4 bg-green-600 text-green-950 border-green-400' : ''}>
             <FiSave />
-          </button>
+          </Button>
         </nav>
       </header>
 
