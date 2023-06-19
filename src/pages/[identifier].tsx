@@ -47,28 +47,27 @@ const EditorPage: React.FC<EditorPageProps> = ({ note }) => {
         <meta name="keywords" content={note.identifier} />
       </Head>
 
-      <header className="w-full py-8 flex items-center justify-between">
-        <div>
-          <button
-            onClick={shareLink}
-            className="group flex items-center gap-2"
-          >
-            <p className="text-base font-medium">{note.identifier}</p>
-            <FiLink className="text-gray-500 group-hover:text-white" />
-          </button>
-        </div>
+      <header className="w-full py-8 flex items-center justify-between sticky top-0 bg-black border-b border-gray-900">
+
+        <button onClick={shareLink} className="group flex items-center gap-2" >
+          <p className="text-base font-medium">{note.identifier}</p>
+          <FiLink className="text-gray-500 group-hover:text-white" />
+        </button>
+
         <nav>
-          <Button onClick={saveBody} className={changedBody ? 'border-2 border-offset-4 bg-green-600 text-green-950 border-green-400' : ''}>
+          <Button onClick={saveBody} className={changedBody ? 'shadow-md shadow-green-500/40 bg-green-500 text-green-950 ' : ''}>
             <FiSave />
           </Button>
         </nav>
+
       </header>
 
       <section>
         <textarea
           value={body}
           onChange={onChangeBody}
-          className="w-full min-h-full bg-transparent outline-none"
+          placeholder="Oh my god i'm empty"
+          className="w-full bg-transparent outline-none resize-none min-h-screen py-8"
         />
       </section>
 
